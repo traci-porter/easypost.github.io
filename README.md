@@ -13,17 +13,18 @@ Before you can make requests, ensure you have completed the following:
 * Become familiar with [EasyPost Objects](https://www.easypost.com/docs/api#objects) to help understand code samples and optimize your application.
 
 > **_NOTES:_** 
-* Additional client libraries (e.g., Perl, iOS) are on our Integrations page. 
-* You can interact directly with the API with cURL.
+> * Additional [client libraries](https://www.easypost.com/docs/libraries) (e.g., Perl, iOS) are available. 
+> * You can interact directly with the API with cURL.
 
 ## Step 1: Purchase shipping label
-In order to purchase a shipping label, you must have an item to ship. In this example, we will ship an EasyPost T-shirt from EasyPost headquarters to a customer. To start, create the To and From Addresses for the package. Once you create an Address object for both the To and From Addresses, the API returns unique IDs for the Addresses. You can reuse an ID for other packages which is helpful when sending many packages from a location.
-
-> **_NOTE:_** For every object type created on EasyPost, you will receive a reusable unique ID.
+In order to purchase a shipping label, you must have an item to ship. In this example, we will ship an EasyPost T-shirt from EasyPost headquarters to a customer. To start, create the To and From Addresses for the package. Once you create an Address object for both the To and From Addresses, the API returns a unique ID for each address. You can reuse the ID for other packages which is helpful when sending many packages from a location.
 
 For more information on the Address object, see [Addresses](https://www.easypost.com/docs/api/curl#addresses).
+
+> **_NOTE:_**
+> * For every object type created on EasyPost, you will receive a reusable unique ID.
  
-### Create from address
+### Example: Create a from address
 
 #### Request
 
@@ -69,7 +70,7 @@ POST: HTTP://api.easypost.com/v2/addresses
     "verifications": {}
 }
 ```
-### Create To Address
+### Example: Create a to address 
 
 #### Request
 
@@ -116,13 +117,14 @@ POST: HTTP://api.easypost.com/v2/addresses
 ```
 
 ## Step 2: Create a Parcel
-A parcel object contains information about the weight and dimensions (length, width, and height) of an object. Once you create a parcel, the API returns a unique parcel ID in the response object under the ID Key. You can reference this ID in future calls. In this example, the parcel is a T-shirt, which means the package is small.
+A parcel object contains information about the weight and dimensions (length, width, and height) of an object. Once you create a parcel, the API returns a unique parcel ID in the response object under the ID Key. You can reference this ID in future calls. In this example, the parcel is a T-shirt, which means the package size is light.
 
-> **_NOTE:_** Enter weight in ounces and dimensions in inches.
+For more information on the Parcel object, see [Parcels](https://www.easypost.com/docs/api/curl#parcels).
 
-For more information on the Parcel object, see [Parcels](https://www.easypost.com/docs/api/curl#parcels)
+> **_NOTE:_**
+> * Enter weight in ounces and dimensions in inches.
 
-### Example request: Create a parcel
+### Example: Create a parcel 
 
 #### Request
  ```
@@ -134,7 +136,7 @@ POST: HTTP://api.easypost.com/v2/parcels
         "length": "20.2",
         "width": "10.9",
         "height": "5",
-        "weight": "5"
+        "weight": "2"
     }
 }
 ```
@@ -149,21 +151,23 @@ POST: HTTP://api.easypost.com/v2/parcels
     "width": 10.9,
     "height": 5.0,
     "predefined_package": null,
-    "weight": 5.0,
+    "weight": 2.0,
     "mode": "test"
 }
 ```
 
 
 ## Step 3: Create a Shipment and Get Rates
-After creating To and From Addresses and a parcel, you can create a shipment. The API returns shipment rates for all the carriers you enable. The rates are for shipping the parcel between the specified To and From Addresses. An individual rate contains information about the carrier, the service level (e.g., One day, two days, Ground, etc), cost, and the estimated number of days to delivery (when available).
+After creating To and From Addresses and a parcel, you can create a shipment. The API returns shipment rates for all the carriers you enable. The rates are for shipping the parcel between the specified To and From Addresses. 
 
-The simple example below uses USPS as the carrier. Feel free to add additional carriers.
+An individual rate contains information about the carrier, the service level (e.g., one day, two days, Ground, etc), cost, and the estimated number of days for delivery (when available).
 
-For more information on the Shipment object, see [Shipments](https://www.easypost.com/docs/api/curl#shipments).  
-For more information on the Rates object, see [Shipments](https://www.easypost.com/docs/api/curl#rates). 
+For more information, see [Shipments](https://www.easypost.com/docs/api/curl#shipments) and [Rates](https://www.easypost.com/docs/api/curl#rates).
 
-### Example request: Create shipments
+> **_NOTE:_**
+> * The simple example below uses USPS as the carrier. Feel free to add additional carriers.
+
+### Example: Create a shipment and get rates
 
 #### Request
  
@@ -201,7 +205,7 @@ For more information on the Rates object, see [Shipments](https://www.easypost.c
             "length": "20.2",
             "width": "10.9",
             "height": "5",
-            "weight": "5"
+            "weight": "2"
         }
     }
 }
@@ -464,15 +468,17 @@ For more information on the Rates object, see [Shipments](https://www.easypost.c
 ```
 
 ## Step 4: Buy and generate a shipping label
-This last step walks you through buying and generating the shipping label. To buy the lowest shipping rate for your shipment, use the convenience functions built into the client libraries. You must pass in the rate ID you'd like to use. 
+This last step walks you through buying and generating the shipping label for your parcel. There are two options for generating the shipping label.
+ 1. **Client Libraries** Use the convenience functions built into the [client libraries](https://www.easypost.com/docs/libraries) to retrieve the rate ID with the lowest rate. 
 
-If using the API, enter the rate ID found in the Create shipments response body  to the shipment resource. After successfully submitting the request, the response contains a URL to the image of your label. Download and print the "label_url".
+ 2. **Shipment Rate Optimizer API** This API allows you to buy the lowest shipping rate for your shipment. Enter the shipment ID in the URL. Then, enter the rate ID with the lowest rate obtained in the [Create shipments](#step-3-create-a-shipment-and-get-rates) response body and POST it to the shipment resource. After successfully submitting the request, the response contains a URL (e.g., `label_url`) to the image of your label. Download and print the label. In addition, the response includes a tracking ID for your package. You can store this information and pass it on to your customers.
 
-_NOTE:_ 
-* Labels are returned in .PNG format.
-* The response includes a tracking ID for your package i
-  
-### Example Request: Shipping label
+For more information on the Shipment Rate Optimizer API, see [SmartRate Guide](https://www.easypost.com/smartrate-guide).
+
+> **_NOTE:_**
+> * Labels are returned in .PNG format, but you can request other formats.
+
+### Example: Create a shipping label
 
 #### Request
 
@@ -550,7 +556,7 @@ _NOTE:_
         "width": 10.9,
         "height": 5.0,
         "predefined_package": null,
-        "weight": 5.0,
+        "weight": 2.0,
         "mode": "test"
     },
     "postage_label": {
@@ -851,4 +857,20 @@ _NOTE:_
     "object": "Shipment"
 }
 ```
+## FAQs
+**How can I generate the shipping label?**
 
+The response body for the `v2/shipments/:id/optimize_buy` endpoint contains a `label_url` field. You can go to the URL to download and print your shipping label.
+
+**How can I buy the lowest rate?**
+
+Use the functions built into the client libraries to buy the lowest rate or use the rate ID of the cheapest rate in `v2/shipments/:id/optimize_buy` endpoint.
+
+
+## References
+* [Address](https://www.easypost.com/docs/api/curl#addresses)
+* [Parcels](https://www.easypost.com/docs/api/curl#parcels)
+* [Shipments](https://www.easypost.com/docs/api/curl#shipments)  
+* [Rates](https://www.easypost.com/docs/api/curl#rates)
+* [Client libraries](https://www.easypost.com/docs/libraries)
+* [SmartRate Guide](https://www.easypost.com/smartrate-guide)
