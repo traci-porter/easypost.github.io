@@ -2,7 +2,7 @@
 The Shipment Rate Optimizer API is an endpoint that automatically purchases the cheapest rate available for a given EasyPost Shipment ID and returns a label object.
 
 ## Introduction
-This guide walks you through using the Shipment Rate Optimizer API. The example describes how to [purchase a shipping label](https://github.com/traci-porter/easypost.github.io/step1-purchase-shipping-label), [create a parcel](https://github.com/traci-porter/easypost.github.io/step2-create-a-parcel), [create a shipment](https://github.com/traci-porter/easypost.github.io/step3-create-a-shipment-and-get-rates), [get rates](https://github.com/traci-porter/easypost.github.io/step3-create-a-shipment-and-get-rates), and [buy and generate a shipping label](https://github.com/traci-porter/easypost.github.io/step4-buy-and-generate-a-shipping-label).
+This guide walks you through using the Shipment Rate Optimizer API. The example describes how to [purchase a shipping label](/#step-1-purchase-shipping-label), [create a parcel](/#step2-create-a-parcel), [create a shipment](/#step3-create-a-shipment-and-get-rates), [get rates](#/step3-create-a-shipment-and-get-rates), and [buy and generate a shipping label](#/step4-buy-and-generate-a-shipping-label).
 
 ## Getting started
 Before you can make requests, ensure you have completed the following:
