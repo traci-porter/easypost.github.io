@@ -1,10 +1,10 @@
 # Shipment Rate Optimizer API
-The Shipment Rate Optimizer API is an endpoint that automatically purchases the cheapest rate available for a given EasyPost Shipment ID and returns a label object.
+The Shipment Rate Optimizer API enables you to create labels by automatically choosing the cheapest option, completing a purchase, and returning a label object.
 
 ## Introduction
 This guide walks you through using the Shipment Rate Optimizer API. The example describes how to [purchase a shipping label](https://traci-porter.github.io/easypost.github.io/#step-1-purchase-shipping-label), [create a parcel](https://traci-porter.github.io/easypost.github.io/#step-2-create-a-parcel), [create a shipment](https://traci-porter.github.io/easypost.github.io/#step-3-create-a-shipment-and-get-rates), [get rates](https://traci-porter.github.io/easypost.github.io/#step-3-create-a-shipment-and-get-rates), and [buy and generate a shipping label](https://traci-porter.github.io/easypost.github.io/#step-4-buy-and-generate-a-shipping-label).
 
-## Getting started
+## Before you start
 Before you can make requests, ensure you have completed the following:
 
 * Create an [EasyPost account](https://www.easypost.com/signup) to obtain a Test Key and a Production Key. Switch to the Production Key when buying real postage.
@@ -22,12 +22,12 @@ In order to purchase a shipping label, you must have an item to ship. In this ex
 For more information on the Address object, see [Addresses](https://www.easypost.com/docs/api/curl#addresses).
 
 > **_NOTE:_**
-> * For every object type created on EasyPost, you will receive a reusable unique ID.
+> For every object type created on EasyPost, you will receive a reusable unique ID.
  
 ### Example: Create a from address
+The following example shows how to create a from address.
 
 #### Request
-
 ```
 EASYPOST_API_KEY  
 Content type: application/json  
@@ -71,6 +71,7 @@ POST: HTTP://api.easypost.com/v2/addresses
 }
 ```
 ### Example: Create a to address 
+The following example shows how to create a to address.
 
 #### Request
 
@@ -122,9 +123,10 @@ A parcel object contains information about the weight and dimensions (length, wi
 For more information on the Parcel object, see [Parcels](https://www.easypost.com/docs/api/curl#parcels).
 
 > **_NOTE:_**
-> * Enter weight in ounces and dimensions in inches.
+> Enter weight in ounces and dimensions in inches.
 
 ### Example: Create a parcel 
+The following example shows how to create a parcel.
 
 #### Request
  ```
@@ -165,12 +167,12 @@ An individual rate contains information about the carrier, the service level (e.
 For more information, see [Shipments](https://www.easypost.com/docs/api/curl#shipments) and [Rates](https://www.easypost.com/docs/api/curl#rates).
 
 > **_NOTE:_**
-> * The simple example below uses USPS as the carrier. Feel free to add additional carriers.
+> The simple example below uses USPS as the carrier. Feel free to add additional carriers. See [Adding Carrier Accounts](https://support.easypost.com/hc/en-us/articles/360037347912-Adding-Carrier-Accounts) for details. 
 
 ### Example: Create a shipment and get rates
+The following example shows how to create a shipment and get rates.
 
 #### Request
- 
  ```
  EASYPOST_API_KEY  
  Content type: application/json  
@@ -476,12 +478,12 @@ This last step walks you through buying and generating the shipping label for yo
 For more information on the Shipment Rate Optimizer API, see the [SmartRate Guide](https://www.easypost.com/smartrate-guide).
 
 > **_NOTE:_**
-> * Labels are returned in .PNG format, but you can request other formats.
+> Labels are returned in .PNG format, but you can request other formats.
 
 ### Example: Create a shipping label
+The following example shows how to create a shipping label.
 
 #### Request
-
 ```
  EASYPOST_API_KEY  
  Content type: application/json  
