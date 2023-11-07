@@ -117,7 +117,7 @@ POST: HTTP://api.easypost.com/v2/addresses
 ```
 
 ## Step 2: Create a Parcel
-A parcel object contains information about the weight and dimensions (length, width, and height) of an object. Once you create a parcel, the API returns a unique parcel ID in the response object under the ID Key. You can reference this ID in future calls. In this example, the parcel is a T-shirt, which means the package size is light.
+A parcel object contains information about the weight and dimensions (length, width, and height) of an object. Once you create a parcel, the API returns a unique parcel ID in the response object under the ID Key. You can reference this ID in future calls. In this example, the parcel is a T-shirt, which means the package size is small and light.
 
 For more information on the Parcel object, see [Parcels](https://www.easypost.com/docs/api/curl#parcels).
 
@@ -158,7 +158,7 @@ POST: HTTP://api.easypost.com/v2/parcels
 
 
 ## Step 3: Create a Shipment and Get Rates
-After creating To and From Addresses and a parcel, you can create a shipment. The API returns shipment rates for all the carriers you enable. The rates are for shipping the parcel between the specified To and From Addresses. 
+After creating To and From Addresses and a parcel, you can create a shipment. The API returns shipment rates for all the carriers you enable. The rates are for shipping the parcel between the specified To and From Addresses. In this example, the request body includes the to and from addresses for sending the T-shirt and the parcel information. A successful request returns a rate ID.
 
 An individual rate contains information about the carrier, the service level (e.g., one day, two days, Ground, etc), cost, and the estimated number of days for delivery (when available).
 
@@ -473,7 +473,7 @@ This last step walks you through buying and generating the shipping label for yo
 
  2. **Shipment Rate Optimizer API** This API allows you to buy the lowest shipping rate for your shipment. Enter the shipment ID in the URL. Then, enter the rate ID with the lowest rate obtained in the [Create shipments](#step-3-create-a-shipment-and-get-rates) response body and POST it to the shipment resource. After successfully submitting the request, the response contains a URL (e.g., `label_url`) to the image of your label. Download and print the label. In addition, the response includes a tracking ID for your package. You can store this information and pass it on to your customers.
 
-For more information on the Shipment Rate Optimizer API, see [SmartRate Guide](https://www.easypost.com/smartrate-guide).
+For more information on the Shipment Rate Optimizer API, see the [SmartRate Guide](https://www.easypost.com/smartrate-guide).
 
 > **_NOTE:_**
 > * Labels are returned in .PNG format, but you can request other formats.
